@@ -23,6 +23,5 @@ namespace SimpleWpfDocking
         public static readonly DependencyProperty SideProperty =
             DependencyProperty.Register("Side", typeof(Dock), typeof(SidePanel), new PropertyMetadata(default));
 
-
     }
 }

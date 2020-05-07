@@ -87,10 +87,8 @@
         </Grid.ColumnDefinitions>
 
         <local:SidePanel Grid.Column="0" x:Name="SidePaneL" Side="Left"></local:SidePanel>
-        
         <RichTextBox Grid.Column="1"></RichTextBox>
         <local:SidePanel Grid.Column="2" x:Name="SidePaneR" Side="Right"></local:SidePanel>
-
         
     </Grid>
 </Window>

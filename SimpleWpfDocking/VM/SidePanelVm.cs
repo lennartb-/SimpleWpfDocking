@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using GalaSoft.MvvmLight.CommandWpf;
 using SimpleWpfDocking.Annotations;
 
@@ -20,11 +21,29 @@ namespace SimpleWpfDocking.VM
 
         public PaneItemVm ActivePane { get; set; }
 
+        public string Name { get; set; }
+
+        public PaneManager Manager { get; set; }
+
+
         public RelayCommand<PaneItemVm> SetActiveContentCommand
         {
             get
             {
                 return new RelayCommand<PaneItemVm>( item => ActivePane = item);
+            }
+        }
+
+        public RelayCommand<ContextMenuEventArgs > OnContextMenuOpening
+        {
+            get
+            {
+                return new RelayCommand<ContextMenuEventArgs>(args =>
+                {
+                    var ctx = args.Source as ContextMenu;
+                    Manager.GetItemsForPane()
+                    ctx.Items
+                });
             }
         }
     }
