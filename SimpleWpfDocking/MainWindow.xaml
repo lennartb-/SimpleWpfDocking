@@ -6,7 +6,91 @@
         xmlns:local="clr-namespace:SimpleWpfDocking"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <RichTextBox x:Key="Rtb" Background="DimGray">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Foreground="AntiqueWhite">Gluten Tag</Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <TreeView x:Key="Tv" >
+            <TreeViewItem Header="Employee1" IsSelected="True">
+                <TreeViewItem Header="Foo bar"/>
+                <TreeViewItem Header="Employee Number">
+                    <TreeViewItem Header="12345"/>
+                </TreeViewItem>
+                <TreeViewItem Header="Work Days">
+                    <TreeViewItem Header="Monday"/>
+                    <TreeViewItem Header="Tuesday"/>
+                    <TreeViewItem Header="Thursday"/>
+                </TreeViewItem>
+            </TreeViewItem>
+            <TreeViewItem Header="Employee2">
+                <TreeViewItem Header="Bar Foo"/>
+                <TreeViewItem Header="Employee Number">
+                    <TreeViewItem Header="98765"/>
+                </TreeViewItem>
+                <TreeViewItem Header="Work Days">
+                    <TreeViewItem Header="Tuesday"/>
+                    <TreeViewItem Header="Wednesday"/>
+                    <TreeViewItem Header="Friday"/>
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+        <Canvas x:Key="Cv">
+            <CheckBox>Check this</CheckBox>
+        </Canvas>
+        <Canvas x:Key="Draw">
+
+            <!-- Draws a diagonal line from (10,10) to (50,50). -->
+            <Line
+                X1="10" Y1="10"
+                X2="50" Y2="50"
+                Stroke="Black"
+                StrokeThickness="4" />
+
+            <!-- Draws a diagonal line from (10,10) to (50,50)
+       and moves it 100 pixels to the right. -->
+            <Line
+                X1="10" Y1="10"
+                X2="50" Y2="50"
+                StrokeThickness="4"
+                Canvas.Left="100">
+                <Line.Stroke>
+                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
+                        <RadialGradientBrush.GradientStops>
+                            <GradientStop Color="Red" Offset="0" />
+                            <GradientStop Color="Blue" Offset="0.25" />
+                        </RadialGradientBrush.GradientStops>
+                    </RadialGradientBrush>
+                </Line.Stroke>
+            </Line>
+
+            <!-- Draws a horizontal line from (10,60) to (150,60). -->
+            <Line
+                X1="10" Y1="60"
+                X2="150" Y2="60"
+                Stroke="Black"
+                StrokeThickness="4"/>
+
+        </Canvas>
+
+
+    </Window.Resources>
     <Grid>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <local:SidePanel Grid.Column="0" x:Name="SidePaneL" Side="Left"></local:SidePanel>
+        
+        <RichTextBox Grid.Column="1"></RichTextBox>
+        <local:SidePanel Grid.Column="2" x:Name="SidePaneR" Side="Right"></local:SidePanel>
+
+        
     </Grid>
 </Window>

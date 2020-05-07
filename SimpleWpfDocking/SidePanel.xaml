@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="SimpleWpfDocking.SidePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimpleWpfDocking"
+             xmlns:vm="clr-namespace:SimpleWpfDocking.VM"
+             mc:Ignorable="d" 
+             
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance vm:SidePanelVm}">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="LeftTemplate">
+            <Grid Background="DimGray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ItemsControl Grid.Column="0" ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Foreground="AntiqueWhite" FontFamily="Segoe MDL2 Assets" FontSize="25" Background="DimGray" BorderThickness="0" Height="50" Content="{Binding ButtonText}" Command="{Binding DataContext.SetActiveContentCommand, RelativeSource={RelativeSource AncestorType=local:SidePanel}}" CommandParameter="{Binding}"></Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <ContentPresenter Grid.Column="1" Content="{Binding ActivePane.PaneContent}"></ContentPresenter>
+            </Grid>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="RightTemplate">
+            <Grid Background="DimGray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="50"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ContentPresenter Grid.Column="0" Content="{Binding ActivePane.PaneContent}"></ContentPresenter>
+                <ItemsControl Grid.Column="1" ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Foreground="AntiqueWhite" FontFamily="Segoe MDL2 Assets" FontSize="25" Background="DimGray" BorderThickness="0" Height="50" Content="{Binding ButtonText}" Command="{Binding DataContext.SetActiveContentCommand, RelativeSource={RelativeSource AncestorType=local:SidePanel}}" CommandParameter="{Binding}"></Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+        </ControlTemplate>
+
+    </UserControl.Resources>
+    <Grid>
+        <ContentControl Grid.Column="0">
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Side, RelativeSource={RelativeSource AncestorType=local:SidePanel}}" Value="Right">
+                            <Setter Property="Template" Value="{StaticResource RightTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Side, RelativeSource={RelativeSource AncestorType=local:SidePanel}}" Value="Left">
+                            <Setter Property="Template" Value="{StaticResource LeftTemplate}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+    </Grid>
+   
+</UserControl>
