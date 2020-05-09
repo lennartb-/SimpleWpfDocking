@@ -14,27 +14,27 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <TreeView x:Key="Tv" >
+        <TreeView x:Key="Tv">
             <TreeViewItem Header="Employee1" IsSelected="True">
-                <TreeViewItem Header="Foo bar"/>
+                <TreeViewItem Header="Foo bar" />
                 <TreeViewItem Header="Employee Number">
-                    <TreeViewItem Header="12345"/>
+                    <TreeViewItem Header="12345" />
                 </TreeViewItem>
                 <TreeViewItem Header="Work Days">
-                    <TreeViewItem Header="Monday"/>
-                    <TreeViewItem Header="Tuesday"/>
-                    <TreeViewItem Header="Thursday"/>
+                    <TreeViewItem Header="Monday" />
+                    <TreeViewItem Header="Tuesday" />
+                    <TreeViewItem Header="Thursday" />
                 </TreeViewItem>
             </TreeViewItem>
             <TreeViewItem Header="Employee2">
-                <TreeViewItem Header="Bar Foo"/>
+                <TreeViewItem Header="Bar Foo" />
                 <TreeViewItem Header="Employee Number">
-                    <TreeViewItem Header="98765"/>
+                    <TreeViewItem Header="98765" />
                 </TreeViewItem>
                 <TreeViewItem Header="Work Days">
-                    <TreeViewItem Header="Tuesday"/>
-                    <TreeViewItem Header="Wednesday"/>
-                    <TreeViewItem Header="Friday"/>
+                    <TreeViewItem Header="Tuesday" />
+                    <TreeViewItem Header="Wednesday" />
+                    <TreeViewItem Header="Friday" />
                 </TreeViewItem>
             </TreeViewItem>
         </TreeView>
@@ -72,7 +72,7 @@
                 X1="10" Y1="60"
                 X2="150" Y2="60"
                 Stroke="Black"
-                StrokeThickness="4"/>
+                StrokeThickness="4" />
 
         </Canvas>
 
@@ -81,14 +81,34 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="200" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
 
-        <local:SidePanel Grid.Column="0" x:Name="SidePaneL" Side="Left"></local:SidePanel>
-        <RichTextBox Grid.Column="1"></RichTextBox>
-        <local:SidePanel Grid.Column="2" x:Name="SidePaneR" Side="Right"></local:SidePanel>
-        
+        <local:SidePanel Grid.Column="0" Grid.RowSpan="3" x:Name="SidePaneL" Side="Left" />
+        <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" HorizontalAlignment="Stretch" />
+
+        <RichTextBox Grid.Column="2" Grid.Row="0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run>Content goes here</Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+        <GridSplitter Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" HorizontalAlignment="Stretch"  />
+        <local:SidePanel Grid.Column="4" Grid.Row="0" Grid.RowSpan="3" x:Name="SidePaneR" Side="Right" />
+
+        <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" />
+        <local:SidePanel Grid.Row="2" Grid.Column="2" x:Name="SidePaneB" Side="Bottom" />
+
     </Grid>
 </Window>

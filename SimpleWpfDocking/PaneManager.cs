@@ -23,11 +23,11 @@ namespace SimpleWpfDocking
             target.Items.Add(item);
         }
 
-        public IEnumerable<ContextMenuEntryVm> GetItemsForPane(SidePanelVm pane)
+        public IEnumerable<ContextMenuEntryVm> GetItemsForPane(PaneItemVm selectedItem, SidePanelVm pane)
         {
-            foreach (var paneItemVm in pane.Items)
+            foreach (var managedPane in managedPanes.Except(new[] {pane}))
             {
-                yield return new ContextMenuEntryVm(paneItemVm, managedPanes.Except(new[] {pane}), SendToPane);
+                yield return new ContextMenuEntryVm(selectedItem, managedPane, SendToPane);
             }
         }
     }

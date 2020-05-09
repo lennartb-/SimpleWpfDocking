@@ -12,32 +12,35 @@
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance vm:SidePanelVm}">
     <UserControl.Resources>
         <local:BindingProxy  x:Key="proxy" Data="{Binding}"></local:BindingProxy>
+        <DataTemplate x:Key="ButtonTemplate">
+            <Button Foreground="AntiqueWhite" Name="Button"  FontFamily="Segoe MDL2 Assets" FontSize="25"
+                    Background="DimGray" BorderThickness="0" Height="50" Content="{Binding ButtonText}"
+                    Command="{Binding DataContext.SetActiveContentCommand, RelativeSource={RelativeSource AncestorType=local:SidePanel}}"
+                    CommandParameter="{Binding}">
+                <Button.ContextMenu>
+                    <ContextMenu DataContext="{Binding Data, Source={StaticResource proxy}}">
+                        <ContextMenu.ItemTemplate>
+                            <DataTemplate DataType="vm:ContextMenuEntryVm">
+                                <TextBlock Text="{Binding Text}" MouseDown="{Binding ClickAction}"></TextBlock>
+                            </DataTemplate>
+                        </ContextMenu.ItemTemplate>
+                                        
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ContextMenuOpening">
+                        <command:EventToCommand Command="{Binding DataContext.OnContextMenuOpening, RelativeSource={RelativeSource AncestorType=local:SidePanel}}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </DataTemplate>
         <ControlTemplate x:Key="LeftTemplate">
             <Grid Background="DimGray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ItemsControl Grid.Column="0" ItemsSource="{Binding Items}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button Foreground="AntiqueWhite" Name="Button"  FontFamily="Segoe MDL2 Assets" FontSize="25"
-                                    Background="DimGray" BorderThickness="0" Height="50" Content="{Binding ButtonText}"
-                                    Command="{Binding DataContext.SetActiveContentCommand, RelativeSource={RelativeSource AncestorType=local:SidePanel}}"
-                                    CommandParameter="{Binding}">
-                                <Button.ContextMenu>
-                                    <ContextMenu DataContext="{Binding Data, Source={StaticResource proxy}}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ContextMenuOpening">
-                                                <command:EventToCommand Command="{Binding OnContextMenuOpening}" PassEventArgsToCommand="True"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        
-                                    </ContextMenu>
-                                </Button.ContextMenu>
-                            </Button>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+                <ItemsControl Grid.Column="0" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource ButtonTemplate}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Vertical" />
@@ -55,18 +58,27 @@
                     <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
                 <ContentPresenter Grid.Column="0" Content="{Binding ActivePane.PaneContent}" />
-                <ItemsControl Grid.Column="1" ItemsSource="{Binding Items}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button Foreground="AntiqueWhite" FontFamily="Segoe MDL2 Assets" FontSize="25"
-                                    Background="DimGray" BorderThickness="0" Height="50" Content="{Binding ButtonText}"
-                                    Command="{Binding DataContext.SetActiveContentCommand, RelativeSource={RelativeSource AncestorType=local:SidePanel}}"
-                                    CommandParameter="{Binding}" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
+                <ItemsControl Grid.Column="1" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource ButtonTemplate}">
+                   <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="BottomTemplate">
+            <Grid Background="DimGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <ContentPresenter Grid.Row="0" Content="{Binding ActivePane.PaneContent}" />
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource ButtonTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
@@ -88,6 +100,11 @@
                             Binding="{Binding Side, RelativeSource={RelativeSource AncestorType=local:SidePanel}}"
                             Value="Left">
                             <Setter Property="Template" Value="{StaticResource LeftTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Side, RelativeSource={RelativeSource AncestorType=local:SidePanel}}"
+                            Value="Bottom">
+                            <Setter Property="Template" Value="{StaticResource BottomTemplate}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

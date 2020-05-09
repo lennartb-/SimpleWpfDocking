@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
@@ -7,6 +7,9 @@ using SimpleWpfDocking.Annotations;
 
 namespace SimpleWpfDocking.VM
 {
+    /// <summary>
+    /// Viewmodel for a side pane.
+    /// </summary>
     public class SidePanelVm : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -17,7 +20,7 @@ namespace SimpleWpfDocking.VM
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public List<PaneItemVm> Items { get; set; } = new List<PaneItemVm>();
+        public ObservableCollection<PaneItemVm> Items { get; set; } = new ObservableCollection<PaneItemVm>();
 
         public PaneItemVm ActivePane { get; set; }
 
@@ -30,19 +33,27 @@ namespace SimpleWpfDocking.VM
         {
             get
             {
-                return new RelayCommand<PaneItemVm>( item => ActivePane = item);
+                return new RelayCommand<PaneItemVm>(item => ActivePane = item);
             }
         }
 
-        public RelayCommand<ContextMenuEventArgs > OnContextMenuOpening
+        public RelayCommand<ContextMenuEventArgs> OnContextMenuOpening
         {
             get
             {
                 return new RelayCommand<ContextMenuEventArgs>(args =>
                 {
-                    var ctx = args.Source as ContextMenu;
-                    Manager.GetItemsForPane()
-                    ctx.Items
+                    if (!(args.Source is Button button && button.DataContext is PaneItemVm paneVm)) return;
+
+                    var entries = Manager.GetItemsForPane(paneVm, this);
+                    button.ContextMenu?.Items.Clear();
+                    foreach (var contextMenuEntryVm in entries)
+                    {
+                        var menuItem = new MenuItem { DataContext = contextMenuEntryVm, Header = contextMenuEntryVm.Text };
+                        menuItem.Click += (sender, eventArgs) =>
+                            contextMenuEntryVm.ClickAction(contextMenuEntryVm.ItemVm, contextMenuEntryVm.Target);
+                        button.ContextMenu?.Items.Add(menuItem);
+                    }
                 });
             }
         }
