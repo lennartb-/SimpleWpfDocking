@@ -10,11 +10,11 @@
         <RichTextBox x:Key="Rtb" Background="DimGray">
             <FlowDocument>
                 <Paragraph>
-                    <Run Foreground="AntiqueWhite">Gluten Tag</Run>
+                    <Run Foreground="WhiteSmoke">Hallo Welt</Run>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <TreeView x:Key="Tv">
+        <TreeView x:Key="Tv" Background="DimGray">
             <TreeViewItem Header="Employee1" IsSelected="True">
                 <TreeViewItem Header="Foo bar" />
                 <TreeViewItem Header="Employee Number">
@@ -82,19 +82,19 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
-            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="3" />
             <ColumnDefinition />
-            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="3" />
             <ColumnDefinition Width="200" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="5" />
+            <RowDefinition Height="3" />
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
         <local:SidePanel Grid.Column="0" Grid.RowSpan="3" x:Name="SidePaneL" Side="Left" />
-        <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" HorizontalAlignment="Stretch" Background="DimGray"  />
 
         <RichTextBox Grid.Column="2" Grid.Row="0">
             <FlowDocument>
@@ -104,10 +104,10 @@
             </FlowDocument>
         </RichTextBox>
 
-        <GridSplitter Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" HorizontalAlignment="Stretch"  />
+        <GridSplitter Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" HorizontalAlignment="Stretch" Background="DimGray"   />
         <local:SidePanel Grid.Column="4" Grid.Row="0" Grid.RowSpan="3" x:Name="SidePaneR" Side="Right" />
 
-        <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" Background="DimGray"  />
         <local:SidePanel Grid.Row="2" Grid.Column="2" x:Name="SidePaneB" Side="Bottom" />
 
     </Grid>

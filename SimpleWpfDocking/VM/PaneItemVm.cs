@@ -8,7 +8,7 @@ namespace SimpleWpfDocking.VM
     public class PaneItemVm : INotifyPropertyChanged
     {
         public string ButtonText { get; set; }
-
+        public bool IsActive { get; set; }
         public FrameworkElement PaneContent { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;

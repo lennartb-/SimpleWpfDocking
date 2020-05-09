@@ -33,7 +33,17 @@ namespace SimpleWpfDocking.VM
         {
             get
             {
-                return new RelayCommand<PaneItemVm>(item => ActivePane = item);
+                return new RelayCommand<PaneItemVm>(item =>
+                {
+                    if (ActivePane != null)
+                    {
+                        ActivePane.IsActive = false;
+                    }
+
+                    ActivePane = item;
+                    if (item == null) return;
+                    ActivePane.IsActive = true;
+                });
             }
         }
 
